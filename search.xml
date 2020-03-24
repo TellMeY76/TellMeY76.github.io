@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>10 Useful Angular Features You’ve Probably Never Used</title>
+    <url>/2020/03/24/angular-useful/</url>
+    <content><![CDATA[<p>Having spent so much time writing Angular apps, you’re probably convinced you’ve seen it all. To be 100% sure — read on 😃</p>
+<a id="more"></a>
+
+<h2 id="Title"><a href="#Title" class="headerlink" title="Title"></a>Title</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">import &#123; Title &#125; from <span class="string">"@angular/platform-browser"</span></span><br><span class="line">@Component(&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class LoginComponent implements OnInit &#123;</span><br><span class="line">    constructor(private title: Title) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">ngOnInit</span></span>() &#123;</span><br><span class="line">        title.setTitle(<span class="string">"Login"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>When we navigate to the LoginComponent the title of the browser will be set to “Login”</p>
+<h2 id="Meta"><a href="#Meta" class="headerlink" title="Meta"></a>Meta</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">import &#123; Meta &#125; from <span class="string">"@angular/platform-browser"</span></span><br><span class="line">@Component(&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class BlogComponent implements OnInit &#123;</span><br><span class="line">    constructor(private meta: Meta) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">ngOnInit</span></span>() &#123;</span><br><span class="line">        meta.updateTag(&#123;name: <span class="string">"title"</span>, content: <span class="string">""</span>&#125;)</span><br><span class="line">        meta.updateTag(&#123;name: <span class="string">"description"</span>, content: <span class="string">"Lorem ipsum dolor"</span>&#125;)</span><br><span class="line">        meta.updateTag(&#123;name: <span class="string">"image"</span>, content: <span class="string">"./assets/blog-image.jpg"</span>&#125;)</span><br><span class="line">        meta.updateTag(&#123;name: <span class="string">"site"</span>, content: <span class="string">"My Site"</span>&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>With this our BlogComponent can be rendered on Facebook, Twitter, etc describing our component, providing titles, images, and descriptions.</p>
+<h2 id="Override-Template-interpolation"><a href="#Override-Template-interpolation" class="headerlink" title="Override Template interpolation"></a>Override Template interpolation</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Component(&#123;</span><br><span class="line">    interpolation: [<span class="string">"(("</span>,<span class="string">"))"</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class AppComponent &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Component(&#123;</span><br><span class="line">    template: `</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            ((data))</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    `,</span><br><span class="line">    interpolation: [<span class="string">"(("</span>,<span class="string">"))"</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class AppComponent &#123;</span><br><span class="line">    data: any = <span class="string">"dataVar"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Location"><a href="#Location" class="headerlink" title="Location"></a>Location</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">import &#123; Location &#125; from <span class="string">"@angular/common"</span></span><br><span class="line">@Component(&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class AppComponent &#123;</span><br><span class="line"></span><br><span class="line">    constructor(private location: Location) &#123;&#125;</span><br><span class="line">    navigateTo(url) &#123;</span><br><span class="line">        this.location.go(url)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">goBack</span></span>() &#123;</span><br><span class="line">        location.back()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">goForward</span></span>() &#123;</span><br><span class="line">        location.forward()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We can get the URL of the current browser window using Location service. Depending on which LocationStrategy is used, Location will either persist to the URL’s path or the URL’s hash segment</p>
+<h2 id="Attribute-decorator"><a href="#Attribute-decorator" class="headerlink" title="@Attribute decorator"></a>@Attribute decorator</h2><p>The values of Attribute decorator are checked once and never checked again. They are used similarly to @Input decorator</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Component(&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class BlogComponent &#123;</span><br><span class="line">    constructor(@Attribute(<span class="string">"type"</span>) private <span class="built_in">type</span>: string ) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="HttpInterceptor"><a href="#HttpInterceptor" class="headerlink" title="HttpInterceptor"></a>HttpInterceptor</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Injectable()</span><br><span class="line"><span class="built_in">export</span> class MockBackendInterceptor implements HttpInterceptor &#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span></span>() &#123;&#125;</span><br><span class="line">    intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Then, insert it in your main module:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@NgModule(&#123;</span><br><span class="line">    ...</span><br><span class="line">    providers: [</span><br><span class="line">        &#123;</span><br><span class="line">            provide: HTTP_INTERCEPTORS,</span><br><span class="line">            useClass: MockBackendInterceptor,</span><br><span class="line">            multi: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class AppModule &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="AppInitializer"><a href="#AppInitializer" class="headerlink" title="AppInitializer"></a>AppInitializer</h2><p>We do sometimes want a piece of code to be run when our Angular app is starting, maybe load some settings, load cache, load configurations or do some check-ins. The AppInitialzer token helps out with that.</p>
+<p>APP_INITIALIZER: A function that will be executed when an application is initialized.</p>
+<p>It is easy to use. Let’s we want this runSettings function to be executed on our Angular app startup:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">runSettingsOnInit</span></span>() &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@NgModule(&#123;</span><br><span class="line"></span><br><span class="line">    providers: [</span><br><span class="line">        &#123; provide: APP_INITIALIZER, useFactory: runSettingsOnInit &#125;</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Just like AppInitializer, Angular has a feature that enables us to listen on when a component is being bootstrapped. It is the APP_BOOTSTRAP_LISTENER.</p>
+<h2 id="DOCUMENT"><a href="#DOCUMENT" class="headerlink" title="DOCUMENT"></a>DOCUMENT</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Component(&#123;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class CanvasElement &#123;</span><br><span class="line">    constructor(@Inject(DOCUMENT) _doc: Document) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">renderCanvas</span></span>() &#123;</span><br><span class="line">        this._doc.getElementById(<span class="string">"canvas"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Warning: Tread carefully! Interacting with the DOM directly is dangerous and can introduce XSS risks.</p>
+<h2 id="NgPlural"><a href="#NgPlural" class="headerlink" title="NgPlural"></a>NgPlural</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;p [ngPlural]=<span class="string">"components"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ng-template ngPluralCase=<span class="string">"=1"</span>&gt;1 component removed&lt;/ng-template&gt;    </span><br><span class="line">    &lt;ng-template ngPluralCase=<span class="string">"&gt;1"</span>&gt;&#123;&#123;components&#125;&#125; components removed &lt;/ng-template&gt;    </span><br><span class="line"></span><br><span class="line">&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>To use this directive you must provide a container element that sets the [ngPlural] attribute to a switch expression. Inner elements with a [ngPluralCase] will display based on their expression</p>
+<h2 id="Bootstrap-Listener"><a href="#Bootstrap-Listener" class="headerlink" title="Bootstrap Listener"></a>Bootstrap Listener</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@NgModule(&#123;</span><br><span class="line">    &#123;</span><br><span class="line">        provide: APP_BOOTSTRAP_LISTENER, multi: <span class="literal">true</span>, </span><br><span class="line">        useExisting: runOnBootstrap</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class AppModule &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>To use APP_BOOTSTRAP_LISTENER, we add it to the providers section in our AppModule with the callback function</p>
+<h4 id="More-info-original-link"><a href="#More-info-original-link" class="headerlink" title="More info: original link"></a>More info: <a href="https://blog.bitsrc.io/10-useful-angular-features-youve-probably-never-used-e9e33f5c35a7" target="_blank" rel="noopener">original link</a></h4>]]></content>
+      <categories>
+        <category>learning</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo &amp; serverless--Hello World</title>
+    <url>/2020/03/23/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h3 id="Deploy-serveless-on-Tencent-Cloud"><a href="#Deploy-serveless-on-Tencent-Cloud" class="headerlink" title="Deploy serveless on Tencent Cloud"></a>Deploy serveless on Tencent Cloud</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sls --debug</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://serverlesscloud.cn/" target="_blank" rel="noopener">serverlesscloud</a></p>
+<h3 id="Remove-the-Service"><a href="#Remove-the-Service" class="headerlink" title="Remove the Service:"></a>Remove the Service:</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ serverless remove</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://serverlesscloud.cn/" target="_blank" rel="noopener">serverlesscloud</a></p>
+]]></content>
+      <categories>
+        <category>learning</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+</search>
