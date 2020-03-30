@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-24T02:34:43.716Z</updated>
+  <updated>2020-03-30T01:26:02.664Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用 typescript 与 vant-weapp 制作小程序的一次尝试</title>
+    <link href="http://yoursite.com/2020/03/30/typescript-miniprogram/"/>
+    <id>http://yoursite.com/2020/03/30/typescript-miniprogram/</id>
+    <published>2020-03-30T01:24:39.126Z</published>
+    <updated>2020-03-30T01:26:02.664Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;借助 typescript 3.8.3 与 vant-weapp UI框架 制作一款带有三天天气预报的日历小程序&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="小程序" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>10 Useful Angular Features You’ve Probably Never Used</title>
