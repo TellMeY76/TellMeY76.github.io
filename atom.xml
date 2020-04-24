@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-30T01:26:02.664Z</updated>
+  <updated>2020-04-24T05:58:42.741Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>关于小程序端使用gRPC的探索</title>
+    <link href="http://yoursite.com/2020/04/24/miniprogram-gRPC/"/>
+    <id>http://yoursite.com/2020/04/24/miniprogram-gRPC/</id>
+    <published>2020-04-24T05:56:56.768Z</published>
+    <updated>2020-04-24T05:58:42.741Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对小程序是否能使用gRPC的探索结果&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="小程序" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>使用 typescript 与 vant-weapp 制作小程序的一次尝试</title>
     <link href="http://yoursite.com/2020/03/30/typescript-miniprogram/"/>
     <id>http://yoursite.com/2020/03/30/typescript-miniprogram/</id>
-    <published>2020-03-30T01:24:39.126Z</published>
-    <updated>2020-03-30T01:26:02.664Z</updated>
+    <published>2020-03-30T01:30:28.839Z</published>
+    <updated>2020-04-24T05:56:56.769Z</updated>
     
     <summary type="html">
     

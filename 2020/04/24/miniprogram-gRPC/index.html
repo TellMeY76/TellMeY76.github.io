@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    使用 typescript 与 vant-weapp 制作小程序的一次尝试 |  TellMeY&#39;s Blogs
+    关于小程序端使用gRPC的探索 |  TellMeY&#39;s Blogs
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -31,7 +31,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-typescript-miniprogram" class="article article-type-post" itemscope
+  <article id="post-miniprogram-gRPC" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -39,7 +39,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  使用 typescript 与 vant-weapp 制作小程序的一次尝试
+  关于小程序端使用gRPC的探索
 </h1>
  
 
@@ -48,8 +48,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/03/30/typescript-miniprogram/" class="article-date">
-  <time datetime="2020-03-30T01:30:28.839Z" itemprop="datePublished">2020-03-30</time>
+      <a href="/2020/04/24/miniprogram-gRPC/" class="article-date">
+  <time datetime="2020-04-24T05:56:56.768Z" itemprop="datePublished">2020-04-24</time>
 </a>
       
   <div class="article-category">
@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">727字</span>
+            <span class="post-count">687字</span>
         </span>
     </span>
 
@@ -97,47 +97,24 @@
       
 
       
-      <p>借助 typescript 3.8.3 与 vant-weapp UI框架 制作一款带有三天天气预报的日历小程序</p>
+      <p>对小程序是否能使用gRPC的探索结果</p>
 <a id="more"></a>
 
-<h3 id="使用-typescript-3-8-3-创建小程序"><a href="#使用-typescript-3-8-3-创建小程序" class="headerlink" title="使用 typescript 3.8.3 创建小程序"></a>使用 typescript 3.8.3 创建小程序</h3><p>目前微信小程序官方文档中已经有了对typescript支持的相关支持，按照文档便可使用typescript愉快地开始编写小程序<a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/edit.html#TypeScript-%E6%94%AF%E6%8C%81" target="_blank" rel="noopener">详情看这里</a>，不过按照文档新建出的项目默认使用的typescript版本是 3.3.3333，这里我们将其改为最新的3.8.3，重新执行 npm install || yarn</p>
-<h4 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h4><p>直接使用官方的配置文件时，可能无法使用promise语法，需将tsconfig.json文件中所有的‘es5’改为‘es6’</p>
-<h3 id="安装-vant-weapp-UI框架"><a href="#安装-vant-weapp-UI框架" class="headerlink" title="安装 vant-weapp UI框架"></a>安装 vant-weapp UI框架</h3><p>Vant Weapp 是移动端 Vue 组件库 Vant 的小程序版本，两者基于相同的视觉规范，提供一致的 API 接口，助力开发者快速搭建小程序应用。</p>
-<h4 id="安装步骤："><a href="#安装步骤：" class="headerlink" title="安装步骤："></a>安装步骤：</h4><ul>
-<li>通过 npm 安装</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i @vant&#x2F;weapp -S --production</span><br></pre></td></tr></table></figure>
+<h3 id="方案一：使用grpc-mp"><a href="#方案一：使用grpc-mp" class="headerlink" title="方案一：使用grpc-mp"></a>方案一：使用grpc-mp</h3><p>grpc官网上提供了grpc-web这一解决方案，用来在web端使用grpc。但是，由于小程序不支持Function 构造器，也没有window这一概念，所以按照grpc-web的方式生成js/ts，无法直接在小程序端使用。</p>
+<p>多年面对搜索引擎编程的经验，让我成功找到了<a href="https://github.com/11os/grpc-mp" target="_blank" rel="noopener">grpc-mp</a>这个库，大佬通过对grpc-web的源码进行修改后，让我们也能使用protoc命令直接输出小程序可以使用的grpc的js/ts文件，具体使用方法以及原理，在<a href="https://github.com/11os/grpc-mp" target="_blank" rel="noopener">github仓库</a>中都有，我就不做搬运工了。</p>
+<h4 id="可能存在的弊端："><a href="#可能存在的弊端：" class="headerlink" title="可能存在的弊端："></a>可能存在的弊端：</h4><p>由于grpc-mp是对grpc-web的源码进行修改而来，并且只是单人维护的库（对大佬无意冒犯），以及更新迭代可能跟不上grpc本身迭代的速度，所以使用上可能会存在一定的风险。</p>
+<h3 id="方案二：使用小程序云函数"><a href="#方案二：使用小程序云函数" class="headerlink" title="方案二：使用小程序云函数"></a>方案二：使用小程序云函数</h3><p>因为觉得方案一可能不够稳妥，我又到小程序的开放社区中，试图找到别人现有的gRPC解决方案，看了一圈，大部分都是在问能否实现的，不过在一个帖子中<a href="https://developers.weixin.qq.com/community/develop/doc/000e4452b7c608aa63c7282b451400?highLine=grpc" target="_blank" rel="noopener">点此直达</a>，我发现有官方人员称小程序的云函数可以使用gRPC。</p>
+<p>既然官方的人都说了，那就试试吧。云函数是在小程序云开发的一部分，所谓云开发，我感觉就是一套小程序的serverless服务方案吧。因为云函数使用的是Nodejs环境，用的也是js，所以对于前端来说上手不难。但是在开始的时候我还是走了一些弯路，因为一开始我都是照着grpc-web的方式在写，所以各种报错，直到出现了这个错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReferenceError: XMLHttpRequest is not defined</span><br></pre></td></tr></table></figure>
 
-<p>需要注意的是 package.json 和 node_modules 必须在 miniprogram 目录下</p>
-<ul>
-<li>构建 npm 包</li>
-</ul>
-<p>打开微信开发者工具，点击 工具 -&gt; 构建 npm，并勾选 使用 npm 模块 选项，构建完成后，即可引入组件</p>
-<ul>
-<li>修改 tsconfig.json</li>
-</ul>
-<p>在 tsconfig.json 中增加如下配置，防止 npm 构建后 tsc 编译报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;baseUrl&quot;: &quot;.&quot;,</span><br><span class="line">  &quot;paths&quot;: &#123;</span><br><span class="line">    &quot;@vant&#x2F;weapp&#x2F;*&quot;: [&quot;.&#x2F;node_modules&#x2F;@vant&#x2F;weapp&#x2F;dist&#x2F;*&quot;]</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>害，整了半天，我忘了grpc-web是要在browser下运行的，可现在这是node环境呀。但是也还好，grpc官网中也提供了node使用grpc的方法，甚至比起grpc-web，使用起来更加方便，<a href="https://grpc.io/docs/quickstart/node/" target="_blank" rel="noopener">文档地址</a>。</p>
+<h4 id="踩到的坑："><a href="#踩到的坑：" class="headerlink" title="踩到的坑："></a>踩到的坑：</h4><p>因为云函数使用的nodejs是在linux环境下的，所以像我这样用windows开发的同学，可能会看到类似这样的错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Error: Failed to load gRPC binary module because it was not installed for the current system</span><br><span class="line"></span><br><span class="line">Expected directory: node-v57-linux-x64-glibc</span><br><span class="line"></span><br><span class="line">Found: [node-v64-win32-x64-unknow]</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>修改 app.json</li>
-</ul>
-<p>将 app.json 中的 “style”: “v2” 去除，小程序的新版基础组件强行加上了许多样式，难以去除，不关闭将造成部分组件样式混乱。</p>
-<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法:"></a>使用方法:</h4><ul>
-<li>以 Button 组件为例，只需要在app.json或index.json中配置 Button 对应的路径即可。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;usingComponents&quot;: &#123;</span><br><span class="line">  &quot;van-button&quot;: &quot;@vant&#x2F;weapp&#x2F;button&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解决这个问题也容易，修改一下npm install 语句即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i --production --unsafe-perm --target&#x3D;8.9.0 --target_platform&#x3D;linux --target_arch&#x3D;x64 --target_libc&#x3D;glibc --update-binary</span><br></pre></td></tr></table></figure>
 
-<p>更多使用方法，请自行查看<a href="https://youzan.github.io/vant-weapp/#/intro" target="_blank" rel="noopener">官方文档</a></p>
-<h3 id="调用天气API"><a href="#调用天气API" class="headerlink" title="调用天气API"></a>调用天气API</h3><p>获取天气预报的API网上有很多，这里我使用的是<a href="https://dev.heweather.com/" target="_blank" rel="noopener">和风天气</a>的API，文档说可以获取3-10天的天气预报，但我在开发中发现无论如何修改参数，始终都只返回了三天的天气预报，大概是因为我用的是免费的吧，所以后续可能会考虑使用别的API来做替换</p>
-<h3 id="发现的问题"><a href="#发现的问题" class="headerlink" title="发现的问题"></a>发现的问题</h3><ul>
-<li>调用API时间较长</li>
-</ul>
-<p>一开始我以为是我的网络问题，但在换了网络之后，仍发现API返回天气预报需要一定时间（可能是返回的数据太多了？）</p>
-<ul>
-<li>UI组件性能问题</li>
-</ul>
-<p>因为需要将天气情况显示在日历中，所以使用了<van-calendar>组件的 formatter 方法，但在实际使用中我发现该方案在渲染的过程中存在重复调用的情况，相同的方法重复调用了6次，我觉得可能对小程序的性能存在一定影响··</p>
+<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><p>对于gRPC的使用，这只是刚刚开了个头，还是要好好看文档，多多实践。</p>
 
       
       <!-- reward -->
@@ -207,7 +184,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/03/30/typescript-miniprogram/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/24/miniprogram-gRPC/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -225,19 +202,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/04/24/miniprogram-gRPC/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            关于小程序端使用gRPC的探索
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/03/24/angular-useful/" class="article-nav-link">
+      <a href="/2020/03/30/typescript-miniprogram/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">10 Useful Angular Features You’ve Probably Never Used</div>
+        <div class="article-nav-title">使用 typescript 与 vant-weapp 制作小程序的一次尝试</div>
       </a>
     
   </nav>
