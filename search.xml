@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>小程序利用云开发实现微信支付的实践</title>
+    <url>/2020/08/03/miniprogram-pay-cloud/</url>
+    <content><![CDATA[<p>利用云开发中的云函数实现小程序的微信支付</p>
+<a id="more"></a>
+
+<h3 id="当前的问题："><a href="#当前的问题：" class="headerlink" title="当前的问题："></a>当前的问题：</h3><ul>
+<li>在微信小程序的开发中，微信支付是让前后端都比较头大的一环，后端的同学相对来说压力大一点，而由于后端的同学需要时间进行各种数据的加解密，</li>
+</ul>
+<p>前端很多时候只能等着接口干着急。随着微信云开发的更新，一种新的解决方案出现了。</p>
+<h3 id="船新的解决方案："><a href="#船新的解决方案：" class="headerlink" title="船新的解决方案："></a>船新的解决方案：</h3><ul>
+<li><p>在云开发更新之后的文档中，我们可以看到这么一段话：</p>
+<blockquote>
+<p>从开发者工具 1.02.2005111 起，云控制台支持云开发微信支付商户绑定，在绑定完成后可在云开发中原生接入微信支付：<br>1、免签名：所有接口免签名、直接获取小程序 wx.requestPayment 所需参数；<br>2、接收回调：云函数支持接收异步支付结果回调 </p>
+</blockquote>
+</li>
+<li><p>这就意味着，后端的同学可能可以从复杂的加解密过程中解放出来了，前端的同学也可以开始自己动手，丰衣足食了。</p>
+</li>
+<li><p>到底是不是这么好用呢，跟着文档来试试吧。</p>
+</li>
+</ul>
+<h3 id="实践一下："><a href="#实践一下：" class="headerlink" title="实践一下："></a>实践一下：</h3><ul>
+<li><p>首先根据文档的提示，先完成对开发者工具的设置，<a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/wechatpay.html" target="_blank" rel="noopener">具体看这里</a></p>
+</li>
+<li><p>相关的API：</p>
+<ul>
+<li><p>CloudPay.closeOrder()<br>关闭订单</p>
+</li>
+<li><p>CloudPay.downloadBill()<br>下载对账单</p>
+</li>
+<li><p>CloudPay.queryOrder()<br>查询订单</p>
+</li>
+<li><p>CloudPay.queryRefund()<br>查询退款</p>
+</li>
+<li><p>CloudPay.refund()<br>申请退款</p>
+</li>
+<li><p>CloudPay.unifiedOrder()<br>统一下单</p>
+</li>
+</ul>
+</li>
+<li><p>开发的主要流程：</p>
+<ol>
+<li>小程序调用云函数，在云函数中调用统一下单接口，参数中带上接收异步支付结果的云函数名和其所在云环境 ID</li>
+<li>统一下单接口返回的成功结果对象中有 payment 字段，该字段即是小程序端发起支付的接口（wx.requestPayment）所需的所有信息</li>
+<li>小程序端拿到云函数结果，调用 wx.requestPayemnt 发起支付</li>
+<li>支付完成后，在统一下单接口中配置的云函数将收到支付结果通知 </li>
+</ol>
+</li>
+<li><p>支付回调：</p>
+<ul>
+<li>微信支付云调用在调用时，需要传递 envId 和 functionName 这两个参数，这两个参数将会在微信支付成功后，发送相应的消息通知，来告知开发者用户的支付状态。</li>
+</ul>
+</li>
+</ul>
+<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><p>通过云开发的方式实现微信支付，可以极大程度的减轻了前后端的工作量，虽然可能会存在一些问题（比如兼容性？），但我觉得还是很值得在实际场景中去使用的。</p>
+<h3 id="one-more-thing"><a href="#one-more-thing" class="headerlink" title="one more thing:"></a>one more thing:</h3><p>可能我的文字的描述过于简单，附上b站上大佬的教学视频，<a href="https://www.bilibili.com/video/BV1Tz4y1d7CX" target="_blank" rel="noopener">传送门</a></p>
+]]></content>
+      <categories>
+        <category>learning</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于小程序端使用gRPC的探索</title>
+    <url>/2020/04/24/miniprogram-gRPC/</url>
+    <content><![CDATA[<p>对小程序是否能使用gRPC的探索结果</p>
+<a id="more"></a>
+
+<h3 id="方案一：使用grpc-mp"><a href="#方案一：使用grpc-mp" class="headerlink" title="方案一：使用grpc-mp"></a>方案一：使用grpc-mp</h3><p>grpc官网上提供了grpc-web这一解决方案，用来在web端使用grpc。但是，由于小程序不支持Function 构造器，也没有window这一概念，所以按照grpc-web的方式生成js/ts，无法直接在小程序端使用。</p>
+<p>多年面对搜索引擎编程的经验，让我成功找到了<a href="https://github.com/11os/grpc-mp" target="_blank" rel="noopener">grpc-mp</a>这个库，大佬通过对grpc-web的源码进行修改后，让我们也能使用protoc命令直接输出小程序可以使用的grpc的js/ts文件，具体使用方法以及原理，在<a href="https://github.com/11os/grpc-mp" target="_blank" rel="noopener">github仓库</a>中都有，我就不做搬运工了。</p>
+<h4 id="可能存在的弊端："><a href="#可能存在的弊端：" class="headerlink" title="可能存在的弊端："></a>可能存在的弊端：</h4><p>由于grpc-mp是对grpc-web的源码进行修改而来，并且只是单人维护的库（对大佬无意冒犯），以及更新迭代可能跟不上grpc本身迭代的速度，所以使用上可能会存在一定的风险。</p>
+<h3 id="方案二：使用小程序云函数"><a href="#方案二：使用小程序云函数" class="headerlink" title="方案二：使用小程序云函数"></a>方案二：使用小程序云函数</h3><p>因为觉得方案一可能不够稳妥，我又到小程序的开放社区中，试图找到别人现有的gRPC解决方案，看了一圈，大部分都是在问能否实现的，不过在一个帖子中<a href="https://developers.weixin.qq.com/community/develop/doc/000e4452b7c608aa63c7282b451400?highLine=grpc" target="_blank" rel="noopener">点此直达</a>，我发现有官方人员称小程序的云函数可以使用gRPC。</p>
+<p>既然官方的人都说了，那就试试吧。云函数是在小程序云开发的一部分，所谓云开发，我感觉就是一套小程序的serverless服务方案吧。因为云函数使用的是Nodejs环境，用的也是js，所以对于前端来说上手不难。但是在开始的时候我还是走了一些弯路，因为一开始我都是照着grpc-web的方式在写，所以各种报错，直到出现了这个错误：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ReferenceError: XMLHttpRequest is not defined</span><br></pre></td></tr></table></figure>
+
+<p>害，整了半天，我忘了grpc-web是要在browser下运行的，可现在这是node环境呀。但是也还好，grpc官网中也提供了node使用grpc的方法，甚至比起grpc-web，使用起来更加方便，<a href="https://grpc.io/docs/quickstart/node/" target="_blank" rel="noopener">文档地址</a>。</p>
+<h4 id="踩到的坑："><a href="#踩到的坑：" class="headerlink" title="踩到的坑："></a>踩到的坑：</h4><p>因为云函数使用的nodejs是在linux环境下的，所以像我这样用windows开发的同学，可能会看到类似这样的错误：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Error: Failed to load gRPC binary module because it was not installed for the current system</span><br><span class="line"></span><br><span class="line">Expected directory: node-v57-linux-x64-glibc</span><br><span class="line"></span><br><span class="line">Found: [node-v64-win32-x64-unknow]</span><br></pre></td></tr></table></figure>
+
+<p>解决这个问题也容易，修改一下npm install 语句即可：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm i --production --unsafe-perm --target&#x3D;8.9.0 --target_platform&#x3D;linux --target_arch&#x3D;x64 --target_libc&#x3D;glibc --update-binary</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><p>对于gRPC的使用，这只是刚刚开了个头，还是要好好看文档，多多实践。</p>
+]]></content>
+      <categories>
+        <category>learning</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 typescript 与 vant-weapp 制作小程序的一次尝试</title>
+    <url>/2020/03/30/typescript-miniprogram/</url>
+    <content><![CDATA[<p>借助 typescript 3.8.3 与 vant-weapp UI框架 制作一款带有三天天气预报的日历小程序</p>
+<a id="more"></a>
+
+<h3 id="使用-typescript-3-8-3-创建小程序"><a href="#使用-typescript-3-8-3-创建小程序" class="headerlink" title="使用 typescript 3.8.3 创建小程序"></a>使用 typescript 3.8.3 创建小程序</h3><p>目前微信小程序官方文档中已经有了对typescript支持的相关支持，按照文档便可使用typescript愉快地开始编写小程序<a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/edit.html#TypeScript-%E6%94%AF%E6%8C%81" target="_blank" rel="noopener">详情看这里</a>，不过按照文档新建出的项目默认使用的typescript版本是 3.3.3333，这里我们将其改为最新的3.8.3，重新执行 npm install || yarn</p>
+<h4 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h4><p>直接使用官方的配置文件时，可能无法使用promise语法，需将tsconfig.json文件中所有的‘es5’改为‘es6’</p>
+<h3 id="安装-vant-weapp-UI框架"><a href="#安装-vant-weapp-UI框架" class="headerlink" title="安装 vant-weapp UI框架"></a>安装 vant-weapp UI框架</h3><p>Vant Weapp 是移动端 Vue 组件库 Vant 的小程序版本，两者基于相同的视觉规范，提供一致的 API 接口，助力开发者快速搭建小程序应用。</p>
+<h4 id="安装步骤："><a href="#安装步骤：" class="headerlink" title="安装步骤："></a>安装步骤：</h4><ul>
+<li>通过 npm 安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm i @vant&#x2F;weapp -S --production</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是 package.json 和 node_modules 必须在 miniprogram 目录下</p>
+<ul>
+<li>构建 npm 包</li>
+</ul>
+<p>打开微信开发者工具，点击 工具 -&gt; 构建 npm，并勾选 使用 npm 模块 选项，构建完成后，即可引入组件</p>
+<ul>
+<li>修改 tsconfig.json</li>
+</ul>
+<p>在 tsconfig.json 中增加如下配置，防止 npm 构建后 tsc 编译报错</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;baseUrl&quot;: &quot;.&quot;,</span><br><span class="line">  &quot;paths&quot;: &#123;</span><br><span class="line">    &quot;@vant&#x2F;weapp&#x2F;*&quot;: [&quot;.&#x2F;node_modules&#x2F;@vant&#x2F;weapp&#x2F;dist&#x2F;*&quot;]</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 app.json</li>
+</ul>
+<p>将 app.json 中的 “style”: “v2” 去除，小程序的新版基础组件强行加上了许多样式，难以去除，不关闭将造成部分组件样式混乱。</p>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法:"></a>使用方法:</h4><ul>
+<li>以 Button 组件为例，只需要在app.json或index.json中配置 Button 对应的路径即可。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;usingComponents&quot;: &#123;</span><br><span class="line">  &quot;van-button&quot;: &quot;@vant&#x2F;weapp&#x2F;button&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更多使用方法，请自行查看<a href="https://youzan.github.io/vant-weapp/#/intro" target="_blank" rel="noopener">官方文档</a></p>
+<h3 id="调用天气API"><a href="#调用天气API" class="headerlink" title="调用天气API"></a>调用天气API</h3><p>获取天气预报的API网上有很多，这里我使用的是<a href="https://dev.heweather.com/" target="_blank" rel="noopener">和风天气</a>的API，文档说可以获取3-10天的天气预报，但我在开发中发现无论如何修改参数，始终都只返回了三天的天气预报，大概是因为我用的是免费的吧，所以后续可能会考虑使用别的API来做替换</p>
+<h3 id="发现的问题"><a href="#发现的问题" class="headerlink" title="发现的问题"></a>发现的问题</h3><ul>
+<li>调用API时间较长</li>
+</ul>
+<p>一开始我以为是我的网络问题，但在换了网络之后，仍发现API返回天气预报需要一定时间（可能是返回的数据太多了？）</p>
+<ul>
+<li>UI组件性能问题</li>
+</ul>
+<p>因为需要将天气情况显示在日历中，所以使用了<van-calendar>组件的 formatter 方法，但在实际使用中我发现该方案在渲染的过程中存在重复调用的情况，相同的方法重复调用了6次，我觉得可能对小程序的性能存在一定影响··</p>
+]]></content>
+      <categories>
+        <category>learning</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>10 Useful Angular Features You’ve Probably Never Used</title>
+    <url>/2020/03/24/angular-useful/</url>
+    <content><![CDATA[<p>Having spent so much time writing Angular apps, you’re probably convinced you’ve seen it all. To be 100% sure — read on 😃</p>
+<a id="more"></a>
+
+<h2 id="Title"><a href="#Title" class="headerlink" title="Title"></a>Title</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">import &#123; Title &#125; from <span class="string">"@angular/platform-browser"</span></span><br><span class="line">@Component(&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class LoginComponent implements OnInit &#123;</span><br><span class="line">    constructor(private title: Title) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">ngOnInit</span></span>() &#123;</span><br><span class="line">        title.setTitle(<span class="string">"Login"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>When we navigate to the LoginComponent the title of the browser will be set to “Login”</p>
+<h2 id="Meta"><a href="#Meta" class="headerlink" title="Meta"></a>Meta</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">import &#123; Meta &#125; from <span class="string">"@angular/platform-browser"</span></span><br><span class="line">@Component(&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class BlogComponent implements OnInit &#123;</span><br><span class="line">    constructor(private meta: Meta) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">ngOnInit</span></span>() &#123;</span><br><span class="line">        meta.updateTag(&#123;name: <span class="string">"title"</span>, content: <span class="string">""</span>&#125;)</span><br><span class="line">        meta.updateTag(&#123;name: <span class="string">"description"</span>, content: <span class="string">"Lorem ipsum dolor"</span>&#125;)</span><br><span class="line">        meta.updateTag(&#123;name: <span class="string">"image"</span>, content: <span class="string">"./assets/blog-image.jpg"</span>&#125;)</span><br><span class="line">        meta.updateTag(&#123;name: <span class="string">"site"</span>, content: <span class="string">"My Site"</span>&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>With this our BlogComponent can be rendered on Facebook, Twitter, etc describing our component, providing titles, images, and descriptions.</p>
+<h2 id="Override-Template-interpolation"><a href="#Override-Template-interpolation" class="headerlink" title="Override Template interpolation"></a>Override Template interpolation</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Component(&#123;</span><br><span class="line">    interpolation: [<span class="string">"(("</span>,<span class="string">"))"</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class AppComponent &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Component(&#123;</span><br><span class="line">    template: `</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            ((data))</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    `,</span><br><span class="line">    interpolation: [<span class="string">"(("</span>,<span class="string">"))"</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class AppComponent &#123;</span><br><span class="line">    data: any = <span class="string">"dataVar"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Location"><a href="#Location" class="headerlink" title="Location"></a>Location</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">import &#123; Location &#125; from <span class="string">"@angular/common"</span></span><br><span class="line">@Component(&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class AppComponent &#123;</span><br><span class="line"></span><br><span class="line">    constructor(private location: Location) &#123;&#125;</span><br><span class="line">    navigateTo(url) &#123;</span><br><span class="line">        this.location.go(url)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">goBack</span></span>() &#123;</span><br><span class="line">        location.back()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">goForward</span></span>() &#123;</span><br><span class="line">        location.forward()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We can get the URL of the current browser window using Location service. Depending on which LocationStrategy is used, Location will either persist to the URL’s path or the URL’s hash segment</p>
+<h2 id="Attribute-decorator"><a href="#Attribute-decorator" class="headerlink" title="@Attribute decorator"></a>@Attribute decorator</h2><p>The values of Attribute decorator are checked once and never checked again. They are used similarly to @Input decorator</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Component(&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class BlogComponent &#123;</span><br><span class="line">    constructor(@Attribute(<span class="string">"type"</span>) private <span class="built_in">type</span>: string ) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="HttpInterceptor"><a href="#HttpInterceptor" class="headerlink" title="HttpInterceptor"></a>HttpInterceptor</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Injectable()</span><br><span class="line"><span class="built_in">export</span> class MockBackendInterceptor implements HttpInterceptor &#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span></span>() &#123;&#125;</span><br><span class="line">    intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Then, insert it in your main module:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@NgModule(&#123;</span><br><span class="line">    ...</span><br><span class="line">    providers: [</span><br><span class="line">        &#123;</span><br><span class="line">            provide: HTTP_INTERCEPTORS,</span><br><span class="line">            useClass: MockBackendInterceptor,</span><br><span class="line">            multi: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class AppModule &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="AppInitializer"><a href="#AppInitializer" class="headerlink" title="AppInitializer"></a>AppInitializer</h2><p>We do sometimes want a piece of code to be run when our Angular app is starting, maybe load some settings, load cache, load configurations or do some check-ins. The AppInitialzer token helps out with that.</p>
+<p>APP_INITIALIZER: A function that will be executed when an application is initialized.</p>
+<p>It is easy to use. Let’s we want this runSettings function to be executed on our Angular app startup:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">runSettingsOnInit</span></span>() &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@NgModule(&#123;</span><br><span class="line"></span><br><span class="line">    providers: [</span><br><span class="line">        &#123; provide: APP_INITIALIZER, useFactory: runSettingsOnInit &#125;</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Just like AppInitializer, Angular has a feature that enables us to listen on when a component is being bootstrapped. It is the APP_BOOTSTRAP_LISTENER.</p>
+<h2 id="DOCUMENT"><a href="#DOCUMENT" class="headerlink" title="DOCUMENT"></a>DOCUMENT</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@Component(&#123;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class CanvasElement &#123;</span><br><span class="line">    constructor(@Inject(DOCUMENT) _doc: Document) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="title">renderCanvas</span></span>() &#123;</span><br><span class="line">        this._doc.getElementById(<span class="string">"canvas"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Warning: Tread carefully! Interacting with the DOM directly is dangerous and can introduce XSS risks.</p>
+<h2 id="NgPlural"><a href="#NgPlural" class="headerlink" title="NgPlural"></a>NgPlural</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;p [ngPlural]=<span class="string">"components"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ng-template ngPluralCase=<span class="string">"=1"</span>&gt;1 component removed&lt;/ng-template&gt;    </span><br><span class="line">    &lt;ng-template ngPluralCase=<span class="string">"&gt;1"</span>&gt;&#123;&#123;components&#125;&#125; components removed &lt;/ng-template&gt;    </span><br><span class="line"></span><br><span class="line">&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>To use this directive you must provide a container element that sets the [ngPlural] attribute to a switch expression. Inner elements with a [ngPluralCase] will display based on their expression</p>
+<h2 id="Bootstrap-Listener"><a href="#Bootstrap-Listener" class="headerlink" title="Bootstrap Listener"></a>Bootstrap Listener</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@NgModule(&#123;</span><br><span class="line">    &#123;</span><br><span class="line">        provide: APP_BOOTSTRAP_LISTENER, multi: <span class="literal">true</span>, </span><br><span class="line">        useExisting: runOnBootstrap</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">export</span> class AppModule &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>To use APP_BOOTSTRAP_LISTENER, we add it to the providers section in our AppModule with the callback function</p>
+<h4 id="More-info-original-link"><a href="#More-info-original-link" class="headerlink" title="More info: original link"></a>More info: <a href="https://blog.bitsrc.io/10-useful-angular-features-youve-probably-never-used-e9e33f5c35a7" target="_blank" rel="noopener">original link</a></h4>]]></content>
+      <categories>
+        <category>learning</category>
+      </categories>
+      <tags>
+        <tag>Angular</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo &amp; serverless--Hello World</title>
+    <url>/2020/03/23/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h3 id="Deploy-serveless-on-Tencent-Cloud"><a href="#Deploy-serveless-on-Tencent-Cloud" class="headerlink" title="Deploy serveless on Tencent Cloud"></a>Deploy serveless on Tencent Cloud</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sls --debug</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://serverlesscloud.cn/" target="_blank" rel="noopener">serverlesscloud</a></p>
+<h3 id="Remove-the-Service"><a href="#Remove-the-Service" class="headerlink" title="Remove the Service:"></a>Remove the Service:</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ serverless remove</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://serverlesscloud.cn/" target="_blank" rel="noopener">serverlesscloud</a></p>
+]]></content>
+      <categories>
+        <category>learning</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+</search>

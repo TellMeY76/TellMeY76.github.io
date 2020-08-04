@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>TellMeY&#39;s Blogs</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2020-08-04T08:05:48.305Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>TellMeY</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>小程序利用云开发实现微信支付的实践</title>
+    <link href="http://yoursite.com/2020/08/03/miniprogram-pay-cloud/"/>
+    <id>http://yoursite.com/2020/08/03/miniprogram-pay-cloud/</id>
+    <published>2020-08-03T05:51:07.055Z</published>
+    <updated>2020-08-04T08:05:48.305Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;利用云开发中的云函数实现小程序的微信支付&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="小程序" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于小程序端使用gRPC的探索</title>
+    <link href="http://yoursite.com/2020/04/24/miniprogram-gRPC/"/>
+    <id>http://yoursite.com/2020/04/24/miniprogram-gRPC/</id>
+    <published>2020-04-24T05:56:56.768Z</published>
+    <updated>2020-04-24T05:58:42.741Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;对小程序是否能使用gRPC的探索结果&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="小程序" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用 typescript 与 vant-weapp 制作小程序的一次尝试</title>
+    <link href="http://yoursite.com/2020/03/30/typescript-miniprogram/"/>
+    <id>http://yoursite.com/2020/03/30/typescript-miniprogram/</id>
+    <published>2020-03-30T01:30:28.839Z</published>
+    <updated>2020-04-24T05:56:56.769Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;借助 typescript 3.8.3 与 vant-weapp UI框架 制作一款带有三天天气预报的日历小程序&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="小程序" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>10 Useful Angular Features You’ve Probably Never Used</title>
+    <link href="http://yoursite.com/2020/03/24/angular-useful/"/>
+    <id>http://yoursite.com/2020/03/24/angular-useful/</id>
+    <published>2020-03-24T01:32:40.995Z</published>
+    <updated>2020-03-24T02:34:43.716Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Having spent so much time writing Angular apps, you’re probably convinced you’ve seen it all. To be 100% sure — read on 😃&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="Angular" scheme="http://yoursite.com/tags/Angular/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo &amp; serverless--Hello World</title>
+    <link href="http://yoursite.com/2020/03/23/hello-world/"/>
+    <id>http://yoursite.com/2020/03/23/hello-world/</id>
+    <published>2020-03-23T06:25:00.134Z</published>
+    <updated>2020-03-24T02:09:01.132Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+    
+  </entry>
+  
+</feed>
