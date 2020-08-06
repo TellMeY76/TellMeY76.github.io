@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-08-04T08:05:48.305Z</updated>
+  <updated>2020-08-06T07:50:19.144Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker使用笔记</title>
+    <link href="http://yoursite.com/2020/08/06/docker/"/>
+    <id>http://yoursite.com/2020/08/06/docker/</id>
+    <published>2020-08-06T07:07:03.094Z</published>
+    <updated>2020-08-06T07:50:19.144Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;记录docker常用的一些命令&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="docker" scheme="http://yoursite.com/tags/docker/"/>
+    
+  </entry>
   
   <entry>
     <title>小程序利用云开发实现微信支付的实践</title>
