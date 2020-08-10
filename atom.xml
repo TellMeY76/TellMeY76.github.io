@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-08-06T07:57:13.368Z</updated>
+  <updated>2020-08-10T07:19:56.306Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Angular依赖注入学习笔记</title>
+    <link href="http://yoursite.com/2020/08/10/angular-DI/"/>
+    <id>http://yoursite.com/2020/08/10/angular-DI/</id>
+    <published>2020-08-10T05:37:12.003Z</published>
+    <updated>2020-08-10T07:19:56.306Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt; Angular DI 框架学习笔记&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="Angular" scheme="http://yoursite.com/tags/Angular/"/>
+    
+  </entry>
   
   <entry>
     <title>docker使用笔记</title>
