@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>vue3入门笔记</title>
+    <url>/2021/08/08/vue3/</url>
+    <content><![CDATA[<p>vue3入门学习笔记<br> <a id="more"></a></p>
+<h4 id="Hello，Vite"><a href="#Hello，Vite" class="headerlink" title="Hello，Vite"></a>Hello，Vite</h4><p> Vite是vue作者开发的一款意图取代webpack的工具，实现原理是利用ES6的import发送请求去加载文件的特性，去拦截这些请求，做预编译，省去了webpack冗长的打包时间</p>
+<p> Vite生成的脚手架项目的目录结构与Vue CLI生成的项目目录结构很类似，确实是这样的，而且开发方式也基本相同。不过Vite项目的默认配置文件是vite.config.js，而不是vue.config.js。</p>
+<ul>
+<li>优点:</li>
+</ul>
+<ol>
+<li>因为没有打包工作要做，所以本地服务器冷启动非常快。</li>
+<li>代码是按需编译的，因此只有在当前页面上实际导入的代码才会编译。我们不必等到整个应用程序打包后才开始开发，这对于有几十个页面的应用程序来说是一个巨大的不同</li>
+</ol>
+<p>一个字概括，就是快</p>
+<h4 id="实现双向绑定的原理不同了"><a href="#实现双向绑定的原理不同了" class="headerlink" title="实现双向绑定的原理不同了"></a>实现双向绑定的原理不同了</h4><p> 在vue2中，实现数据双向绑定主要是基于ES5中的Object.defineProperty()api实现的。 vue2会对data属性中定义的数据进行递归将所有属性都转化为 getter/setter 的形式，因此在对data中的某个值赋值时，就会触发 setter，那么就能监听到了数据变化。<br> 也正是由于这种实现方式，vue2的双向绑定中会存在一些限制，比如无法原生的对数组进行响应式监听，而为了实现对于深度嵌套的数据，就需要使用递归，进而消耗大量性能</p>
+<ul>
+<li><p>对数组进行递归遍历</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">observeArray (items: Array&lt;any&gt;) &#123;</span><br><span class="line">  for (let i &#x3D; 0, l &#x3D; items.length; i &lt; l; i++) &#123;</span><br><span class="line">    observe(items[i])  &#x2F;&#x2F; observe 功能为监测数据的变化</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<p> 在vue3则是使用ES6 的 Proxy api 对数据进行代理，具有以下优点(可能没有列全):</p>
+<ol>
+<li><p>Proxy支持监听原生数组和对象</p>
+</li>
+<li><p>Proxy的获取数据，只会递归到需要获取的层级，不会继续递归</p>
+</li>
+<li><p>Proxy 返回的是一个新对象,我们可以只操作新的对象达到目的,而 Object.defineProperty 只能遍历对象属性直接修改；</p>
+</li>
+<li><p>Proxy 有多达 13 种拦截方法,不限于 apply、ownKeys、deleteProperty、has 等等是 Object.defineProperty 不具备的；</p>
+</li>
+</ol>
+<h4 id="听说我长得很像React-Hooks-Composition-api闪亮登场"><a href="#听说我长得很像React-Hooks-Composition-api闪亮登场" class="headerlink" title="听说我长得很像React Hooks, Composition api闪亮登场"></a>听说我长得很像React Hooks, Composition api闪亮登场</h4><p> 在vue2中，使用 (data、computed、methods、watch) 组件选项来组织逻辑通常都很有效。然而，当我们的组件开始变得更大时，逻辑关注点的列表也会增长。尤其对于那些一开始没有编写这些组件的人来说，这会导致组件难以阅读和理解。</p>
+<p> 而vue3为了解决这个问题，进而引入了Composition api。Composition API 是围绕一个新的组件选项 setup 而创建的，它只是一个函数，向模板返回属性和函数。就是这样。我们在这里声明所有的响应式属性、计算属性、watchers和生命周期钩子，然后返回它们，这样它们就可以在模板中使用。因此我们可以使用setup()函数将逻辑关联的代码单独剥离出来，同时也增加了这段逻辑代码的可复用性。</p>
+<h4 id="生命周期不同了"><a href="#生命周期不同了" class="headerlink" title="生命周期不同了"></a>生命周期不同了</h4><p> destroyed 生命周期被重命名为 unmounted</p>
+<p> beforeDestroy 生命周期被重命名为 beforeUnmount</p>
+<p> 因为 setup 是围绕 beforeCreate 和 created 生命周期钩子运行的，所以不需要显式地定义它们。换句话说，在这些钩子中编写的任何代码都应该直接在 setup 函数中编写。</p>
+<p> 你可以通过在生命周期钩子前面加上 “on” 来访问组件的生命周期钩子。</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import &#123;onMounted&#125; from &#39;vue&#39;</span><br><span class="line"></span><br><span class="line"> export default &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    &#x2F;&#x2F; mounted</span><br><span class="line">    onMounted(() &#x3D;&gt; &#123;</span><br><span class="line">      console.log(&#39;Component is mounted!&#39;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="其他一些改变"><a href="#其他一些改变" class="headerlink" title="其他一些改变"></a>其他一些改变</h4><ol>
+<li><p>slot改为v-slot</p>
+</li>
+<li><p>Vue 3 有 createApp()，而 Vue 2 的是 new Vue()</p>
+</li>
+<li><p>改变了vue2中.sync的写法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">vue2中的写法</span><br><span class="line">&lt;component :value.sync&#x3D;&quot;x&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">vue3中的写法</span><br><span class="line">&lt;component v-model:value&#x3D;&quot;x&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="未完待续，随时补充"><a href="#未完待续，随时补充" class="headerlink" title="未完待续，随时补充"></a>未完待续，随时补充</h4><h4 id="更多的不同，可以参考vue3官方迁移指南"><a href="#更多的不同，可以参考vue3官方迁移指南" class="headerlink" title="更多的不同，可以参考vue3官方迁移指南"></a>更多的不同，可以参考<a href="https://v3.cn.vuejs.org/guide/migration/introduction.html#%E6%A6%82%E8%A7%88" target="_blank" rel="noopener">vue3官方迁移指南</a></h4>]]></content>
+      <categories>
+        <category>learning</category>
+      </categories>
+      <tags>
+        <tag>Vue3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>js事件循环笔记</title>
     <url>/2021/08/08/event_loop/</url>
     <content><![CDATA[<p>宏任务与微任务<br> <a id="more"></a></p>
@@ -17,7 +76,7 @@
     <title>react hooks与redux学习笔记</title>
     <url>/2020/08/11/hooks&amp;redux/</url>
     <content><![CDATA[<p>  react hooks与redux实战学习笔记<br> <a id="more"></a></p>
-]]></content>
+<h3 id="咳，鸽了，以后补"><a href="#咳，鸽了，以后补" class="headerlink" title="咳，鸽了，以后补"></a>咳，鸽了，以后补</h3>]]></content>
       <categories>
         <category>learning</category>
       </categories>

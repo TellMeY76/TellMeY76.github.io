@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-08-08T05:40:58.790Z</updated>
+  <updated>2021-08-08T07:06:57.288Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vue3入门笔记</title>
+    <link href="http://yoursite.com/2021/08/08/vue3/"/>
+    <id>http://yoursite.com/2021/08/08/vue3/</id>
+    <published>2021-08-08T05:44:52.090Z</published>
+    <updated>2021-08-08T07:06:57.288Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;vue3入门学习笔记&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="Vue3" scheme="http://yoursite.com/tags/Vue3/"/>
+    
+  </entry>
   
   <entry>
     <title>js事件循环笔记</title>
@@ -42,7 +63,7 @@
     <link href="http://yoursite.com/2020/08/11/hooks&amp;redux/"/>
     <id>http://yoursite.com/2020/08/11/hooks&amp;redux/</id>
     <published>2020-08-11T04:24:39.225Z</published>
-    <updated>2020-08-11T04:25:56.568Z</updated>
+    <updated>2021-08-08T06:35:31.505Z</updated>
     
     <summary type="html">
     
