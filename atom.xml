@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-08-10T07:19:56.306Z</updated>
+  <updated>2021-08-08T05:40:58.790Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>js事件循环笔记</title>
+    <link href="http://yoursite.com/2021/08/08/event_loop/"/>
+    <id>http://yoursite.com/2021/08/08/event_loop/</id>
+    <published>2021-08-08T05:32:09.475Z</published>
+    <updated>2021-08-08T05:40:58.790Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;宏任务与微任务&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="Javascript" scheme="http://yoursite.com/tags/Javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>react hooks与redux学习笔记</title>
+    <link href="http://yoursite.com/2020/08/11/hooks&amp;redux/"/>
+    <id>http://yoursite.com/2020/08/11/hooks&amp;redux/</id>
+    <published>2020-08-11T04:24:39.225Z</published>
+    <updated>2020-08-11T04:25:56.568Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;  react hooks与redux实战学习笔记&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="React" scheme="http://yoursite.com/tags/React/"/>
+    
+  </entry>
   
   <entry>
     <title>Angular依赖注入学习笔记</title>
