@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-08-08T07:06:57.288Z</updated>
+  <updated>2021-08-13T05:50:20.735Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Typescript学习笔记-2021</title>
+    <link href="http://yoursite.com/2021/08/13/typescript2021/"/>
+    <id>http://yoursite.com/2021/08/13/typescript2021/</id>
+    <published>2021-08-13T05:48:59.667Z</published>
+    <updated>2021-08-13T05:50:20.735Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt; 好久没用ts了，重新学起来！&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="Typescript" scheme="http://yoursite.com/tags/Typescript/"/>
+    
+  </entry>
   
   <entry>
     <title>vue3入门笔记</title>
@@ -63,11 +84,11 @@
     <link href="http://yoursite.com/2020/08/11/hooks&amp;redux/"/>
     <id>http://yoursite.com/2020/08/11/hooks&amp;redux/</id>
     <published>2020-08-11T04:24:39.225Z</published>
-    <updated>2021-08-08T06:35:31.505Z</updated>
+    <updated>2021-08-13T08:46:43.722Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;  react hooks与redux实战学习笔记&lt;br&gt;
+      &lt;p&gt;  react hooks与redux学习笔记&lt;br&gt;
     
     </summary>
     
