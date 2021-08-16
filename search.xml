@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Typescript学习笔记-2021</title>
-    <url>/2021/08/13/typescript2021/</url>
-    <content><![CDATA[<p> 好久没用ts了，重新学起来！<br> <a id="more"></a></p>
-]]></content>
-      <categories>
-        <category>learning</category>
-      </categories>
-      <tags>
-        <tag>Typescript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vue3入门笔记</title>
     <url>/2021/08/08/vue3/</url>
     <content><![CDATA[<p>vue3入门学习笔记<br> <a id="more"></a></p>
