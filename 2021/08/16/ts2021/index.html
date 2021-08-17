@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">499字</span>
+            <span class="post-count">767字</span>
         </span>
     </span>
 
@@ -72,7 +72,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">2分钟</span>
+            <span class="post-count">3分钟</span>
         </span>
     </span>
 </div>
@@ -111,6 +111,21 @@
 
 <p>这里有使用一个as const的语法，as const的作用类似于const，但用在这里，是为了确保对象中的所有属性都被赋值为文字类型</p>
 <h4 id="null和undefined"><a href="#null和undefined" class="headerlink" title="null和undefined"></a>null和undefined</h4><p>TypeScript有一种特殊的语法，可以在不做任何显式检查的情况下从类型中删除null和undefined。写作!在任何表达式之后都是一个有效的类型断言，表明该值不是null或undefined</p>
+<h4 id="类型谓词-is"><a href="#类型谓词-is" class="headerlink" title="类型谓词 is"></a>类型谓词 is</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> isString(<span class="built_in">test</span>: any): <span class="built_in">test</span> is string&#123;</span><br><span class="line">    <span class="built_in">return</span> typeof <span class="built_in">test</span> === <span class="string">"string"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> example(foo: any)&#123;</span><br><span class="line">    <span class="keyword">if</span>(isString(foo))&#123;</span><br><span class="line">        console.log(<span class="string">"it is a string"</span> + foo);</span><br><span class="line">        console.log(foo.length); // string <span class="keyword">function</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在isString(foo)被调用后，如果函数返回true, TypeScript会将foo的类型缩小为string。</p>
+<h4 id="尤雨溪在知乎回答过的问题：never类型如何使用？"><a href="#尤雨溪在知乎回答过的问题：never类型如何使用？" class="headerlink" title="尤雨溪在知乎回答过的问题：never类型如何使用？"></a>尤雨溪在知乎回答过的问题：never类型如何使用？</h4><p>参看尤雨溪的回答，举个例子</p>
+<p>现在有个union type：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface Dog &#123;</span><br><span class="line">  <span class="built_in">type</span>: <span class="string">'dog'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface Cat &#123;</span><br><span class="line">  <span class="built_in">type</span>: <span class="string">'cat'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">type</span> All = Dog | Cat</span><br></pre></td></tr></table></figure>
+
+<p>使用switch，对不同的类型进行处理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> handleValue(val: All) &#123;</span><br><span class="line">  switch (val.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'dog'</span>:</span><br><span class="line">      // 这里 val 被收窄为 Dog</span><br><span class="line">      <span class="built_in">break</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">'cat'</span>:</span><br><span class="line">      // val 在这里是 Cat</span><br><span class="line">      <span class="built_in">break</span></span><br><span class="line">    default:</span><br><span class="line">      // val 在这里是 never</span><br><span class="line">      const exhaustiveCheck: never = val</span><br><span class="line">      <span class="built_in">break</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果中间的逻辑处理不出问题，handleValue函数是可以正常运行的</p>
+<p>然后有一天，需求改变了，All这个类型需要改变：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> All = Dog | Cat | Pig</span><br></pre></td></tr></table></figure>
+
+<p>再次运行handleValue这个函数，就会报错：Type ‘Pig’ is not assignable to type ‘never’.</p>
+<p>所以通过这个办法，你可以确保 handleValue 总是穷尽所有 All 的可能类型</p>
 <h4 id="未完待续，不定期更新"><a href="#未完待续，不定期更新" class="headerlink" title="未完待续，不定期更新"></a>未完待续，不定期更新</h4>
       
       <!-- reward -->
