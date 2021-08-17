@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-08-08T07:06:57.288Z</updated>
+  <updated>2021-08-17T06:04:21.103Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Typescript学习笔记2021</title>
+    <link href="http://yoursite.com/2021/08/16/ts2021/"/>
+    <id>http://yoursite.com/2021/08/16/ts2021/</id>
+    <published>2021-08-16T06:37:07.182Z</published>
+    <updated>2021-08-17T06:04:21.103Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt; 时隔一年没有使用ts了，准备再去把它捡起来，重新好好学一下吧&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="Typescript" scheme="http://yoursite.com/tags/Typescript/"/>
+    
+  </entry>
   
   <entry>
     <title>vue3入门笔记</title>

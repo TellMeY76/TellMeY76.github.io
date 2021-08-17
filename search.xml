@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Typescript学习笔记2021</title>
+    <url>/2021/08/16/ts2021/</url>
+    <content><![CDATA[<p> 时隔一年没有使用ts了，准备再去把它捡起来，重新好好学一下吧<br> <a id="more"></a></p>
+<p> 关于Typescript，官方的<a href="https://www.typescriptlang.org/docs/handbook/intro.html" target="_blank" rel="noopener">handbook</a>真的写的很不错，我打算边看边复习，好吧，其实就是重新学习了，在这里就记录一些自己觉得有用的。</p>
+<h4 id="interface与type的区别"><a href="#interface与type的区别" class="headerlink" title="interface与type的区别"></a>interface与type的区别</h4><p>interface与type其实用法十分类似，多数情况下可以自由选择使用， interface的几乎所有功能都在type中可用，关键区别在于不能重新打开type以添加​​新属性</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// interface可以重新打开</span><br><span class="line">interface Window &#123;</span><br><span class="line">  title: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface Window &#123;</span><br><span class="line">  ts: TypeScriptAPI</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const src = <span class="string">'const a = "Hello World"'</span>;</span><br><span class="line">window.ts.transpileModule(src, &#123;&#125;);</span><br><span class="line"></span><br><span class="line">// <span class="built_in">type</span>不可以重新打开</span><br><span class="line"><span class="built_in">type</span> Window = &#123;</span><br><span class="line">  title: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Error: Duplicate identifier <span class="string">'Window'</span>.</span><br><span class="line"><span class="built_in">type</span> Window = &#123;</span><br><span class="line">  ts: TypeScriptAPI</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然二者还有其他的一些区别,比如</p>
+<p>interface只能用于声明对象的形状，而不能重命名原始类型，type则可以</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">type</span> SanitizedString = string</span><br><span class="line"><span class="built_in">type</span> EvenNumber = number</span><br><span class="line"></span><br><span class="line">// This isn<span class="string">'t feasible with interfaces</span></span><br><span class="line"><span class="string">interface X extends string &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="文字类型的一些注意事项"><a href="#文字类型的一些注意事项" class="headerlink" title="文字类型的一些注意事项"></a>文字类型的一些注意事项</h4><p>在使用对象初始化变量时，TypeScript 假定该对象的属性稍后可能会更改值，所以不会将该属性的类型指定为文字类型。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">const req = &#123; url: <span class="string">"https://example.com"</span>, method: <span class="string">"GET"</span> &#125;;</span><br><span class="line">handleRequest(req.url, req.method);</span><br><span class="line">// Error:Argument of <span class="built_in">type</span> <span class="string">'string'</span> is not assignable to parameter of <span class="built_in">type</span> <span class="string">'"GET" | "POST"'</span>.</span><br><span class="line"></span><br><span class="line">// 通常的解决办法</span><br><span class="line"></span><br><span class="line">// 办法 1:</span><br><span class="line">const req = &#123; url: <span class="string">"https://example.com"</span>, method: <span class="string">"GET"</span> as <span class="string">"GET"</span> &#125;;</span><br><span class="line"></span><br><span class="line">// 办法 2</span><br><span class="line">handleRequest(req.url, req.method as <span class="string">"GET"</span>);</span><br><span class="line"></span><br><span class="line">// 其他的解决方式</span><br><span class="line">const req = &#123; url: <span class="string">"https://example.com"</span>, method: <span class="string">"GET"</span> &#125; as const;</span><br></pre></td></tr></table></figure>
+
+<p>这里有使用一个as const的语法，as const的作用类似于const，但用在这里，是为了确保对象中的所有属性都被赋值为文字类型</p>
+<h4 id="null和undefined"><a href="#null和undefined" class="headerlink" title="null和undefined"></a>null和undefined</h4><p>TypeScript有一种特殊的语法，可以在不做任何显式检查的情况下从类型中删除null和undefined。写作!在任何表达式之后都是一个有效的类型断言，表明该值不是null或undefined</p>
+<h4 id="未完待续，不定期更新"><a href="#未完待续，不定期更新" class="headerlink" title="未完待续，不定期更新"></a>未完待续，不定期更新</h4>]]></content>
+      <categories>
+        <category>learning</category>
+      </categories>
+      <tags>
+        <tag>Typescript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue3入门笔记</title>
     <url>/2021/08/08/vue3/</url>
     <content><![CDATA[<p>vue3入门学习笔记<br> <a id="more"></a></p>
