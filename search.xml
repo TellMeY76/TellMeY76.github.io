@@ -32,6 +32,10 @@
 
 <p>再次运行handleValue这个函数，就会报错：Type ‘Pig’ is not assignable to type ‘never’.</p>
 <p>所以通过这个办法，你可以确保 handleValue 总是穷尽所有 All 的可能类型</p>
+<h4 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h4><p>当一个函数，其输入的类型与输出的类型相关，或者两个输入的类型以某种方式相关时，泛型就派上用途了</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">// 这里的Type就是泛型，一般会简写成T</span><br><span class="line"><span class="keyword">function</span> firstElement&lt;Type&gt;(arr: Type[]): Type &#123;</span><br><span class="line">  <span class="built_in">return</span> arr[0];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 这里的Input，Output是泛型</span><br><span class="line"><span class="keyword">function</span> map&lt;Input, Output&gt;(arr: Input[], func: (arg: Input) =&gt; Output): Output[] &#123;</span><br><span class="line">  <span class="built_in">return</span> arr.map(func);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//parsed就会是Output[]的类型，在这里是number[]</span><br><span class="line">const parsed = map([<span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>], (n) =&gt; parseInt(n));</span><br></pre></td></tr></table></figure>
+
+<p>官方给的rule：尽可能地使用泛型参数本身，而不是用extends建立约束；如果泛型只出现在一个位置，请强烈重新考虑是否真的需要使用它</p>
 <h4 id="未完待续，不定期更新"><a href="#未完待续，不定期更新" class="headerlink" title="未完待续，不定期更新"></a>未完待续，不定期更新</h4>]]></content>
       <categories>
         <category>learning</category>
