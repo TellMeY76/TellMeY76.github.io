@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-08-18T02:35:39.769Z</updated>
+  <updated>2021-09-01T05:20:50.506Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>手写一个Promise</title>
+    <link href="http://yoursite.com/2021/09/01/promise/"/>
+    <id>http://yoursite.com/2021/09/01/promise/</id>
+    <published>2021-09-01T01:16:01.387Z</published>
+    <updated>2021-09-01T05:20:50.506Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Promise经常在使用，却了解的不太深，来从头开始学习一下吧&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
+    
+    
+      <category term="Javascript" scheme="http://yoursite.com/tags/Javascript/"/>
+    
+  </entry>
   
   <entry>
     <title>Typescript学习笔记2021</title>
@@ -118,27 +139,6 @@
     
     
       <category term="Angular" scheme="http://yoursite.com/tags/Angular/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>docker使用笔记</title>
-    <link href="http://yoursite.com/2020/08/06/docker/"/>
-    <id>http://yoursite.com/2020/08/06/docker/</id>
-    <published>2020-08-06T07:07:03.094Z</published>
-    <updated>2020-08-06T07:57:13.368Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;记录docker常用的一些命令&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="learning" scheme="http://yoursite.com/categories/learning/"/>
-    
-    
-      <category term="docker" scheme="http://yoursite.com/tags/docker/"/>
     
   </entry>
   
