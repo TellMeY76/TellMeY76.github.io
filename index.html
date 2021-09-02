@@ -65,6 +65,90 @@
     
     
     
+    <article id="post-dynamic_programming" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/09/02/dynamic_programming/"
+    >动态规划练习</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/09/02/dynamic_programming/" class="article-date">
+  <time datetime="2021-09-02T01:36:52.074Z" itemprop="datePublished">2021-09-02</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/learning/">learning</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+       <a id="more"></a>
+
+<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p>在一条直线上，有n个房屋，每个房屋中有数量不等的财宝，有一个盗 贼希望从房屋中盗取财宝，由于房屋中有报警器，如果同时从相邻的两个房屋中盗取财宝就会触发报警器。问在不触发报警器的前提下，最多可获取多少财宝？例如 [5，2，6，3，1，7]，则选择5，6，7</p>
+<h5 id="解法："><a href="#解法：" class="headerlink" title="解法："></a>解法：</h5><p>状态转移公式：dp[i]=Max(dp[i-2]+v[i],dp[[i-1]])<br>v[i]为第i栋房屋中的财产价值，dp[i]为有i栋房屋时，最多可获取的财宝数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">steal</span>(<span class="params">houseArr</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!houseArr||!houseArr.length)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> nums=houseArr.length</span><br><span class="line">  <span class="keyword">const</span> maxSteal=[]</span><br><span class="line">  maxSteal[<span class="number">0</span>]=houseArr[<span class="number">0</span>]</span><br><span class="line">  <span class="keyword">if</span>(nums &gt;= <span class="number">2</span>)&#123;</span><br><span class="line">  maxSteal[<span class="number">1</span>]=<span class="built_in">Math</span>.max(houseArr[<span class="number">0</span>], houseArr[<span class="number">1</span>])</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">2</span>;i&lt;nums;i++)&#123;</span><br><span class="line">     maxSteal[i]=<span class="built_in">Math</span>.max(maxSteal[i<span class="number">-2</span>]+houseArr[i], maxSteal[i<span class="number">-1</span>])  </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span>  maxSteal[nums<span class="number">-1</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h5><p>给定一个数组，求这个数组的连续子数组中，最大的那一段的和。<br>如数组[-2,1,-3,4,-1,2,1,-5,4] 的子段为：<br>[-2,1]、[1,-3,4,-1]、[4,-1,2,1]、…、[-2,1,-3,4,-1,2,1,-5,4]，和最大的是[4,1,2,1]，为6。</p>
+<h5 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h5><p>状态转移公式： dp[i] = max(dp[i-1]+nums[i],nums[i])<br>nums[i]为数组中第i项的值，dp[i]为结尾为nums[i]的子段的最大子段和</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maxSum</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!arr||!arr.length)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">     &#125;</span><br><span class="line">    <span class="keyword">const</span> maxSum=[]</span><br><span class="line">    <span class="keyword">const</span> numLen=arr.length</span><br><span class="line">    maxSum[<span class="number">0</span>]=arr[<span class="number">0</span>]</span><br><span class="line">   <span class="keyword">let</span> max=maxSum[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span>(numLen&gt;=<span class="number">2</span>)&#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">1</span>;i&lt;numLen;i++)&#123;</span><br><span class="line">         maxSum[i]=<span class="built_in">Math</span>.max(arr[i],maxSum[i<span class="number">-1</span>]+arr[i])</span><br><span class="line">         <span class="keyword">if</span>(maxSum[i]&gt;max)&#123;</span><br><span class="line">             max=maxSum[i]</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">    <span class="keyword">return</span> max</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h5><p>已知不同面值的钞票，求如 何用最少数量的钞票组成某个金额，求可 以使用的最少钞票数量。如果任意数量的已知面值钞票都无法组成该金额， 则返回-1。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: coins = [1, 2, 5], amount = 11</span><br><span class="line">Output: 3 </span><br><span class="line">Explanation: 11 = 5 + 5 + 1</span><br><span class="line">Input: coins = [2], amount = 3</span><br><span class="line">Output: -1</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h5><p>状态转移公式：dp[i] = min(dp[i-1], dp[i-2], dp[i-5]) + 1<br>解释公式： 求出各种面值为所需要的最后一张时所需要的张数，取最小值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">minMoneyCount</span>(<span class="params">coins,amount</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> minMoney=[];</span><br><span class="line">    <span class="keyword">const</span> coinLen=coins?coins.length:<span class="number">0</span>;</span><br><span class="line">     <span class="keyword">if</span> (coinLen == <span class="number">0</span> || amount &lt; <span class="number">0</span>)&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= amount; i++)&#123;</span><br><span class="line">        minMoney[i] = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> coin <span class="keyword">in</span> coins)&#123;</span><br><span class="line">        minMoney[coin]=<span class="number">1</span>;</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= amount;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; coinLen; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (i - coins[j] &gt;= <span class="number">0</span> &amp;&amp; minMoney[i - coins[j]] !== <span class="number">-1</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (minMoney[i] == <span class="number">-1</span> || minMoney[i] &gt; minMoney[i - coins[j]] + <span class="number">1</span>)&#123;</span><br><span class="line">                    minMoney[i] = minMoney[i - coins[j]] + <span class="number">1</span>;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">  &#125;</span><br><span class="line">    <span class="keyword">return</span> minMoney[amount];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-promise" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -697,78 +781,6 @@
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li></ul>
-
-
-    </footer>
-
-  </div>
-
-  
-
-  
-  
-  
-
-  
-
-</article>
-    
-    <article id="post-angular-useful" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/24/angular-useful/"
-    >10 Useful Angular Features You’ve Probably Never Used</a> 
-</h2>
- 
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/03/24/angular-useful/" class="article-date">
-  <time datetime="2020-03-24T01:32:40.995Z" itemprop="datePublished">2020-03-24</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/learning/">learning</a>
-  </div>
-
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-
-      
-      <p>Having spent so much time writing Angular apps, you’re probably convinced you’ve seen it all. To be 100% sure — read on 😃</p>
-      
-      <a class="article-more-link" href="/2020/03/24/angular-useful/">阅读更多...</a>
-      
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/" rel="tag">Angular</a></li></ul>
 
 
     </footer>
