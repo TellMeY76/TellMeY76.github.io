@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-09-02T03:11:32.892Z</updated>
+  <updated>2021-09-02T03:14:58.450Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,19 +21,11 @@
     <link href="http://yoursite.com/2021/09/02/dynamic_programming/"/>
     <id>http://yoursite.com/2021/09/02/dynamic_programming/</id>
     <published>2021-09-02T01:36:52.074Z</published>
-    <updated>2021-09-02T03:11:32.892Z</updated>
+    <updated>2021-09-02T03:14:58.450Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-           &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-
-&lt;h5 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h5&gt;&lt;p&gt;在一条直线上，有n个房屋，每个房屋中有数量不等的财宝，有一个盗
-        
-      
+      &lt;p&gt;练习解决动态规划问题&lt;/p&gt;
     
     </summary>
     
