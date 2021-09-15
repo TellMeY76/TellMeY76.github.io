@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1.2k字</span>
+            <span class="post-count">1.7k字</span>
         </span>
     </span>
 
@@ -72,7 +72,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">4分钟</span>
+            <span class="post-count">7分钟</span>
         </span>
     </span>
 </div>
@@ -136,6 +136,40 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 这两条是函数的重载签名</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">len</span>(<span class="params">s: string</span>): <span class="title">number</span>;</span></span><br><span class="line"><span class="function"><span class="title">function</span> <span class="title">len</span>(<span class="params">arr: any[]</span>): <span class="title">number</span>;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// 这是函数的具体实现</span></span><br><span class="line"><span class="function"><span class="title">function</span> <span class="title">len</span>(<span class="params">x: any</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x.length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 但是TypeScript只能解析单个重载的函数调用，不能同时传入属于不同重载的参数类型，以下调用方式会报错</span></span><br><span class="line">len(<span class="built_in">Math</span>.random() &gt; <span class="number">0.5</span> ? <span class="string">"hello"</span> : [<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
 
 <p>官方建议：尽可能使用联合类型的参数而不是使用函数重载</p>
+<h4 id="实用的内置类型"><a href="#实用的内置类型" class="headerlink" title="实用的内置类型"></a>实用的内置类型</h4><ol>
+<li><p>Partial<br>Partial<T> 的作用就是将某个类型里的属性全部变为可选项 ?。</p>
+</li>
+<li><p>Required<br>Required<T> 的作用就是将某个类型里的属性全部变为必选项</p>
+</li>
+<li><p>Readonly<br>Readonly<T> 的作用是将某个类型所有属性变为只读属性，也就意味着这些属性不能被重新赋值</p>
+</li>
+<li><p>Record<br>Record&lt;K extends keyof any, T&gt; 的作用是将 K 中所有的属性的值转化为 T 类型<br>栗子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">interface PageInfo &#123;</span><br><span class="line">  title: string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Page = <span class="string">"home"</span> | <span class="string">"about"</span> | <span class="string">"contact"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> x: Record&lt;Page, PageInfo&gt; = &#123;</span><br><span class="line">  about: &#123; <span class="attr">title</span>: <span class="string">"about"</span> &#125;,</span><br><span class="line">  contact: &#123; <span class="attr">title</span>: <span class="string">"contact"</span> &#125;,</span><br><span class="line">  home: &#123; <span class="attr">title</span>: <span class="string">"home"</span> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><p>Pick<br>Pick&lt;T, K extends keyof T&gt; 的作用是将某个类型中的子属性挑出来，变成包含这个类型部分属性的子类型。<br>栗子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">interface Todo &#123;</span><br><span class="line">  title: string;</span><br><span class="line">  description: string;</span><br><span class="line">  completed: boolean;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type TodoPreview = Pick&lt;Todo, <span class="string">"title"</span> | <span class="string">"completed"</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> todo: TodoPreview = &#123;</span><br><span class="line">  title: <span class="string">"Clean room"</span>,</span><br><span class="line">  completed: <span class="literal">false</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Exclude<br>Exclude&lt;T, U&gt; 的作用是将某个类型中属于另一个的类型移除掉。<br>栗子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type T0 = Exclude&lt;<span class="string">"a"</span> | <span class="string">"b"</span> | <span class="string">"c"</span>, <span class="string">"a"</span>&gt;; <span class="comment">// "b" | "c"</span></span><br><span class="line">type T1 = Exclude&lt;<span class="string">"a"</span> | <span class="string">"b"</span> | <span class="string">"c"</span>, <span class="string">"a"</span> | <span class="string">"b"</span>&gt;; <span class="comment">// "c"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Extract<br>Extract&lt;T, U&gt; 的作用是从 T 中提取出 U。<br>栗子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type T0 = Extract&lt;<span class="string">"a"</span> | <span class="string">"b"</span> | <span class="string">"c"</span>, <span class="string">"a"</span> | <span class="string">"f"</span>&gt;; <span class="comment">// "a"</span></span><br><span class="line">type T1 = Extract&lt;string | number | <span class="function">(<span class="params">(</span>) =&gt;</span> <span class="keyword">void</span>), <span class="built_in">Function</span>&gt;; <span class="comment">// () =&gt; void</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Omit<br>Omit&lt;T, K extends keyof any&gt; 的作用是使用 T 类型中除了 K 类型的所有属性，来构造一个新的类型。<br>栗子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">interface Todo &#123;</span><br><span class="line">  title: string;</span><br><span class="line">  description: string;</span><br><span class="line">  completed: boolean;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type TodoPreview = Omit&lt;Todo, <span class="string">"description"</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> todo: TodoPreview = &#123;</span><br><span class="line">  title: <span class="string">"Clean room"</span>,</span><br><span class="line">  completed: <span class="literal">false</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>NonNullable<br>NonNullable<T> 的作用是用来过滤类型中的 null 及 undefined 类型。</p>
+</li>
+<li><p>ReturnType<br>ReturnType<T> 的作用是用于获取函数 T 的返回类型。</p>
+</li>
+<li><p>InstanceType<br>InstanceType 的作用是获取构造函数类型的实例类型。</p>
+</li>
+<li><p>ThisType<br>ThisType<T> 的作用是用于指定上下文对象的类型。</p>
+</li>
+<li><p>Parameters<br>Parameters<T> 的作用是用于获得函数的参数类型组成的元组类型。</p>
+</li>
+<li><p>ConstructorParameters<br>ConstructorParameters<T> 的作用是提取构造函数类型的所有参数类型。它会生成具有所有参数类型的元组类型（如果 T 不是函数，则返回的是 never 类型）</p>
+</li>
+</ol>
 <h4 id="未完待续，不定期更新"><a href="#未完待续，不定期更新" class="headerlink" title="未完待续，不定期更新"></a>未完待续，不定期更新</h4>
       
       <!-- reward -->
